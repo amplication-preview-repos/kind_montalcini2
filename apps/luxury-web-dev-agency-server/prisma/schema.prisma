@@ -1,0 +1,62 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Villa {
+  amenities     String?
+  createdAt     DateTime @default(now())
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  location      String?
+  name          String?
+  pricePerNight Float?
+  updatedAt     DateTime @updatedAt
+}
+
+model Client {
+  associatedBusiness String?
+  associatedHotel    String?
+  associatedVilla    String?
+  createdAt          DateTime @default(now())
+  email              String?
+  firstName          String?
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  lastName           String?
+  updatedAt          DateTime @updatedAt
+}
+
+model Hotel {
+  createdAt     DateTime @default(now())
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  location      String?
+  name          String?
+  numberOfRooms Int?
+  rating        Float?
+  updatedAt     DateTime @updatedAt
+}
+
+model Business {
+  contactEmail      String?
+  createdAt         DateTime @default(now())
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  industry          String?
+  name              String?
+  numberOfEmployees Int?
+  updatedAt         DateTime @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
